@@ -1,0 +1,52 @@
+/*
+Query for interpreting the digital welbeing databae (dwbcommon.db)
+
+Database normally found in one of these places:
+/data/data/com.samsung.forest/databases/
+/data/data/com.google.android.apps.wellbeing/databases/
+
+Last edited: 14.03.24
+
+References:
+https://developer.android.com/reference/android/app/usage/UsageEvents.Event
+https://thebinaryhick.blog/2020/02/22/walking-the-android-timeline-using-androids-digital-wellbeing-to-timeline-android-activity/
+*/
+
+SELECT 
+	usageEvents.eventId,
+	usageEvents.timeStamp,
+	datetime(usageEvents.timeStamp / 1000, 'unixepoch', 'localtime') AS converted_timestamp,
+	usageEvents.className,
+	usageEvents.eventType,
+	
+	CASE usageEvents.eventType
+		WHEN 1 THEN 'Activity resumed'
+		WHEN 2 THEN 'Activity paused'
+		WHEN 23 THEN 'Activity stopped'
+		WHEN 15 THEN 'Screen interactive (screen on for full user interaction)'
+		WHEN 16 THEN 'Screen non interactive (Screen on in non interactive state or completely turned off)
+		WHEN 17 THEN 'Keyguard shown / device possibly locked'
+		WHEN 18 THEN 'Keyguard hidden / device possibly unlocked'
+		WHEN 26 THEN 'Device shutdown'
+		WHEN 27 THEN 'Device startup'
+		WHEN 10 THEN 'Notifcation panel (Swipe down)'
+		-- inklude more if needed
+		ELSE 'unknown/not relevant'
+	END as 'Comment',
+	
+	CASE 
+		WHEN usageEvents.className LIKE 'com.android.incallui%' THEN 'Phone-app'
+		WHEN usageEvents.className LIKE 'com.samsung.android.dialer%' THEN 'Phone-app'
+		WHEN usageEvents.className LIKE 'com.sec.android.app.sbrowser%' THEN 'Samsung Internet browser'
+		WHEN usageEvents.className LIKE 'com.samsung.android.messaging%' THEN 'Samsung messages'
+		WHEN usageEvents.className IS NULL THEN 'Ingen verdi'
+		--inklude more if needed
+		ELSE 'unknown/not relevant'
+	END as 'App'
+	
+from
+	usageEvents
+where
+	usageEvents.timeStamp > <insert timestamp here> AND App != 'unknown/not relevant'
+ORDER BY
+	usageEvents.timeStamp DESC
