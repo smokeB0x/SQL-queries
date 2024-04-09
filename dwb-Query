@@ -39,6 +39,7 @@ SELECT
 		WHEN usageEvents.className LIKE 'com.samsung.android.dialer%' THEN 'Phone-app'
 		WHEN usageEvents.className LIKE 'com.sec.android.app.sbrowser%' THEN 'Samsung Internet browser'
 		WHEN usageEvents.className LIKE 'com.samsung.android.messaging%' THEN 'Samsung messages'
+		WHEN usageEvents.className LIKE 'com.google.android.apps.youtube%' THEN 'Youtube app'
 		WHEN usageEvents.className IS NULL THEN 'No value'
 		--inklude more if needed
 		ELSE 'unknown'
