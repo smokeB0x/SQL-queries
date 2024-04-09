@@ -31,7 +31,7 @@ SELECT
 		WHEN 27 THEN 'Device startup'
 		WHEN 10 THEN 'Notifcation panel (Swipe down)'
 		-- inklude more if needed
-		ELSE 'unknown/not relevant'
+		ELSE 'unknown'
 	END as 'Comment',
 	
 	CASE 
@@ -41,12 +41,12 @@ SELECT
 		WHEN usageEvents.className LIKE 'com.samsung.android.messaging%' THEN 'Samsung messages'
 		WHEN usageEvents.className IS NULL THEN 'No value'
 		--inklude more if needed
-		ELSE 'unknown/not relevant'
+		ELSE 'unknown'
 	END as 'App'
 	
 from
 	usageEvents
 where
-	usageEvents.timeStamp > <insert timestamp here> AND App != 'unknown/not relevant'
+	usageEvents.timeStamp > <insert timestamp here> AND App != 'unknown'
 ORDER BY
 	usageEvents.timeStamp DESC
