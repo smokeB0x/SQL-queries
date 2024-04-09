@@ -24,7 +24,7 @@ SELECT
 		WHEN 2 THEN 'Activity paused'
 		WHEN 23 THEN 'Activity stopped'
 		WHEN 15 THEN 'Screen interactive (screen on for full user interaction)'
-		WHEN 16 THEN 'Screen non interactive (Screen on in non interactive state or completely turned off)
+		WHEN 16 THEN 'Screen non interactive (Screen on in non interactive state or completely turned off)'
 		WHEN 17 THEN 'Keyguard shown / device possibly locked'
 		WHEN 18 THEN 'Keyguard hidden / device possibly unlocked'
 		WHEN 26 THEN 'Device shutdown'
