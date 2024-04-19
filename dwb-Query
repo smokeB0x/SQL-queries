@@ -22,6 +22,7 @@ SELECT
 	CASE usageEvents.eventType
 		WHEN 1 THEN 'Activity resumed'
 		WHEN 2 THEN 'Activity paused'
+		WHEN 12 THEN 'Notification / can also be hidden'
 		WHEN 23 THEN 'Activity stopped'
 		WHEN 15 THEN 'Screen interactive (screen on for full user interaction)'
 		WHEN 16 THEN 'Screen non interactive (Screen on in non interactive state or completely turned off)'
@@ -40,6 +41,8 @@ SELECT
 		WHEN usageEvents.className LIKE 'com.sec.android.app.sbrowser%' THEN 'Samsung Internet browser'
 		WHEN usageEvents.className LIKE 'com.samsung.android.messaging%' THEN 'Samsung messages'
 		WHEN usageEvents.className LIKE 'com.google.android.apps.youtube%' THEN 'Youtube app'
+		WHEN usageEvents.className LIKE 'org.thoughtcrime.securesms%' THEN 'Signal'
+		WHEN usageEvents.className LIKE 'com.android.settings%' THEN 'Settings'
 		WHEN usageEvents.className IS NULL THEN 'No value'
 		--inklude more if needed
 		ELSE 'unknown'
@@ -47,7 +50,7 @@ SELECT
 	
 from
 	usageEvents
-where
-	usageEvents.timeStamp > <insert timestamp here> AND App != 'unknown'
+--where
+	--usageEvents.timeStamp > <insert timestamp here> --Remove comment dashes and edit this to enter where-statements
 ORDER BY
 	usageEvents.timeStamp DESC
