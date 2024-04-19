@@ -5,7 +5,7 @@ Database normally found in one of these places:
 /data/data/com.samsung.forest/databases/
 /data/data/com.google.android.apps.wellbeing/databases/
 
-Last edited: 14.03.24
+Last edited: 19.04.24
 
 References:
 https://developer.android.com/reference/android/app/usage/UsageEvents.Event
