@@ -1,3 +1,17 @@
+/*
+Query for extracting the ei-value from google search URLs in the safari favicon database (Favicon.db)
+
+Database normally found here:
+private/var/mobile/Containers/Data/Application/<app UUID>/Library/ImageCache/Favicons/Favicon.db
+
+
+Last edited: 08.05.24
+
+References:
+https://doubleblak.com/blogPost.php?k=favicons
+https://cheeky4n6monkey.blogspot.com/2014/10/google-eid.html
+https://www.magnetforensics.com/resources/analyzing-timestamps-in-google-search-urls/
+*/
 SELECT 
     url,
     CASE 
