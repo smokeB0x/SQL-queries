@@ -1,0 +1,15 @@
+SELECT 
+    url,
+    CASE 
+        WHEN instr(url, 'ei=') > 0 THEN
+            substr(
+                url,
+                instr(url, 'ei=') + 3,
+                instr(substr(url, instr(url, 'ei=') + 3), '&') - 1
+            )
+        ELSE ''
+    END AS ei_value
+FROM 
+    page_url
+WHERE
+    url LIKE 'https://www.google.%' OR url LIKE 'http://www.google.%';
