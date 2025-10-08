@@ -1,5 +1,5 @@
 /*
-Query for interpreting the digital welbeing databae (dwbcommon.db)
+Query for interpreting the digital welbeing databae on Samsung devices (dwbcommon.db)
 
 Database normally found in one of these places:
 /data/data/com.samsung.forest/databases/
