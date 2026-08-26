@@ -1,0 +1,29 @@
+/*
+Query to get the callhistory from the database:
+/private/var/mobile/Library/CallHistoryDB/CallHistory.storagedata
+
+There is more data in the DB (Like if a call was answered or not), but just the basics is included here.
+*/
+SELECT
+	CASE 
+		WHEN ZSERVICE_PROVIDER LIKE '%FaceTime%' THEN 'Facetime'
+		WHEN ZSERVICE_PROVIDER LIKE '%Telephony%' THEN 'Telefon'
+		WHEN ZSERVICE_PROVIDER LIKE '%picaboo%' THEN 'Snapchat'
+		WHEN ZSERVICE_PROVIDER LIKE '%instagram%' THEN 'Instagram'
+		WHEN ZSERVICE_PROVIDER LIKE '%Tachyon%' THEN 'Meet'
+		-- add more based on the apps on the phone
+		ELSE ZSERVICE_PROVIDER
+	END AS 'Type_samtale',
+	ZDATE AS 'Dato/tidsstempel',
+	datetime(ZDATE + 978307200, 'unixepoch', 'localtime') AS 'Dato/Tid - utregnet',
+	time(ZDURATION, 'unixepoch') AS 'Samtalelengde',
+	ZADDRESS AS 'Motpart - identifikator',
+	CASE ZORIGINATED
+		WHEN 0 THEN 'Innkommende'
+		WHEN 1 THEN 'Utgående'
+		ELSE ZORIGINATED
+	END AS 'Retning'
+FROM
+	ZCALLRECORD
+-- Add til filter on date: WHERE datetime(ZDATE + 978307200, 'unixepoch', 'localtime') BETWEEN '2000-01-01 00:00:00' AND '2010-01-01 23:59:59'
+ORDER BY 'Dato/Tid' ASC
