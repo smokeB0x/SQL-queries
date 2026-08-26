@@ -12,3 +12,5 @@ A collection of SQL queries I use
 3) Android/android_dwb-query
    - Query to interpret the digital wellbeing on android phones (not samsung)
    - there are some minor dofferences between samsung and other android devices
+4) iOS/iOS_CallHistory.storagedata
+   - Gets the callhistory from the CallHistory-database on iOS
