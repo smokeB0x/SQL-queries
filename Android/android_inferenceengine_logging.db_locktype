@@ -1,0 +1,21 @@
+/*
+Query for identifying the lock/unlock event.
+
+Info from here: https://thebinaryhick.blog/2025/08/06/not-strange-bedfellows-samsungs-rubin-digital-wellbeing/
+*/
+SELECT
+	screen_state,
+	user_present,
+	use_keyguard,
+	datetime(screen_state_log.time / 1000, 'unixepoch', 'localtime') AS 'Decoded time',
+	time_string,
+	
+	CASE
+		WHEN screen_state=1 AND user_present=1 AND use_keyguard=0 THEN 'Unlock - biometric or passcode'
+		WHEN screen_state=0 AND user_present=0 AND use_keyguard=1 THEN 'Locked by side button'
+		WHEN screen_state=0 AND user_present=0 AND use_keyguard=0 THEN 'Locked by screen timeout'
+		WHEN screen_state=1 AND user_present=0 AND use_keyguard=1 THEN 'Screen illuminated - no unlock'
+		ELSE 'Unknown'
+		END AS 'Lock/unlock type'
+FROM
+	screen_state_log
